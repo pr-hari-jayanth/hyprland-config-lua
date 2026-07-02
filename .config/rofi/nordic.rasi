@@ -1,0 +1,108 @@
+* {
+    bg: #1e1e2e;
+    bg-alt: #313244;
+    fg: #cdd6f4;
+    fg-alt: #89b4fa;
+    urgent: #f38ba8;
+    accent: #89dceb;
+    green: #a6e3a1;
+
+    background-color: transparent;
+    text-color: @fg;
+
+    margin: 0px;
+    padding: 0px;
+    spacing: 4px;
+}
+
+window {
+    transparency: "real";
+    background-color: @bg;
+    border: 2px;
+    border-color: @accent;
+    border-radius: 8px;
+    width: 600px;
+
+}
+
+mainbox {
+    spacing: 0;
+}
+
+inputbar {
+    background-color: @bg-alt;
+    border-radius: 6px;
+    padding: 8px 12px;
+    margin: 12px 12px 0 12px;
+    spacing: 8px;
+    children: [entry, case-indicator];
+}
+
+entry {
+    text-color: @fg;
+    placeholder: "Search...";
+    placeholder-color: @fg-alt;
+    cursor: "blink";
+    padding: 2px 0;
+}
+
+listview {
+    background-color: transparent;
+    columns: 1;
+    lines: 8;
+    cycle: true;
+    dynamic: true;
+    spacing: 4px;
+    padding: 8px;
+    margin: 8px 12px 12px 12px;
+}
+
+element {
+    background-color: transparent;
+    padding: 6px 8px;
+    border-radius: 6px;
+}
+
+element selected {
+    background-color: @accent;
+    text-color: @bg;
+}
+
+element normal active {
+    text-color: var(green);
+}
+
+element urgent {
+    text-color: var(urgent);
+}
+
+element-icon {
+    size: 24px;
+    padding: 0 8px 0 0;
+}
+
+element-text {
+    text-color: inherit;
+}
+
+button {
+    padding: 4px;
+    border: 0;
+    border-radius: 6px;
+    background-color: @bg-alt;
+}
+
+button selected {
+    background-color: @accent;
+    text-color: @bg;
+}
+
+message {
+    padding: 12px;
+    border-top: 1px;
+    border-color: @bg-alt;
+}
+
+textbox {
+    text-color: @fg-alt;
+}

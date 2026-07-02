@@ -1,0 +1,37 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temp / cache
+.cache/
+mpd/db
+mpd/log
+mpd/state
+
+# Script temp files
+*.swp
+*.swo
+
+# Wallpapers (large, cloned separately)
+Pictures/
+
+# GTK themes (downloaded by install script)
+.themes/
+
+# Backup files
+*.bak
+
+# Extra theme files (not configs)
+gtk-3.0/assets/
+gtk-3.0/colors.css
+gtk-3.0/gtk.css
+gtk-3.0/window_decorations.css
+gtk-3.0/bookmarks
+gtk-4.0/colors.css
+gtk-4.0/gtk.css
+gtk-4.0/window_decorations.css
+
+# Unused scripts
+hypr/scripts/cmus-launch.sh
+hypr/scripts/cmus-notify.sh
+hypr/scripts/flameshot-region.sh

@@ -69,7 +69,7 @@ element {
     text-color: var(fg);
     padding: 6px 8px;
     border-radius: 10px;
-    orientation: vertical;
+    orientation: horizontal;
 }
 
 element selected {

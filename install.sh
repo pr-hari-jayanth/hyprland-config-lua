@@ -55,6 +55,27 @@ if [[ ! -d "$HOME/.themes/Catppuccin-Mocha" ]]; then
     sed -i 's/Name=.*/Name=Catppuccin-Mocha/' "$HOME/.themes/Catppuccin-Mocha/index.theme"
 fi
 
+# Gruvbox GTK theme (Fausto-Korpsvart's Gruvbox-GTK-Theme)
+if [[ ! -d "$HOME/.themes/Gruvbox" ]]; then
+    echo "Downloading and building Gruvbox GTK theme..."
+    git clone --depth=1 https://github.com/Fausto-Korpsvart/Gruvbox-GTK-Theme.git /tmp/gruvbox-gtk
+    # Build sassc from source (needed for compilation)
+    git clone --depth=1 https://github.com/sass/libsass.git /tmp/libsass
+    git clone --depth=1 https://github.com/sass/sassc.git /tmp/sassc
+    make -C /tmp/libsass -j$(nproc)
+    make -C /tmp/sassc SASS_LIBSASS_PATH=/tmp/libsass -j$(nproc)
+    cp /tmp/sassc/bin/sassc ~/.local/bin/
+    # Build and install theme
+    export PATH="$HOME/.local/bin:$PATH"
+    cd /tmp/gruvbox-gtk/themes
+    ./build.sh
+    ./install.sh -c dark -n Gruvbox --dest "$HOME/.themes"
+    mv "$HOME/.themes/Gruvbox-Dark" "$HOME/.themes/Gruvbox" 2>/dev/null || true
+    mv "$HOME/.themes/Gruvbox-Dark-hdpi" "$HOME/.themes/Gruvbox-hdpi" 2>/dev/null || true
+    mv "$HOME/.themes/Gruvbox-Dark-xhdpi" "$HOME/.themes/Gruvbox-xhdpi" 2>/dev/null || true
+    sed -i 's/Name=Gruvbox-Dark/Name=Gruvbox/' "$HOME/.themes/Gruvbox/index.theme" 2>/dev/null || true
+fi
+
 # Nordic wallpapers
 if [[ ! -d "$HOME/Pictures/wallpapers" ]]; then
     echo "Cloning Nordic wallpapers..."
@@ -69,19 +90,12 @@ if [[ ! -d "$HOME/Pictures/wallpapers-catppuccin" ]]; then
     git clone --depth=1 https://github.com/orangci/walls-catppuccin-mocha.git "$HOME/Pictures/wallpapers-catppuccin"
 fi
 
-# Retro wallpapers
-if [[ ! -d "$HOME/Pictures/wallpapers-retro" ]]; then
-    echo "Downloading retro wallpapers..."
-    mkdir -p "$HOME/Pictures/wallpapers-retro"
-    git clone --depth=1 https://github.com/D3Ext/aesthetic-wallpapers.git /tmp/aesthetic-walls
-    for f in gruvbox_retrocity retro_city retro_market retro2_live retro_live \
-        neocity neocity2 neon-car2 neon-circle neon-lights neon-shacks-nord \
-        pixel_big_city pixel-city sunset_city plane_sunset nord_dark_city \
-        sunset-xfksfuywx japan_anime_city cityscape-sunset-nord \
-        abstract beach_landscape mountains needing-space ocean_with_cloud \
-        purple-mountain shape-abstract; do
-        find /tmp/aesthetic-walls/images/ -name "${f}.*" -exec cp {} "$HOME/Pictures/wallpapers-retro/" \; 2>/dev/null || true
-    done
+# Gruvbox wallpapers
+if [[ ! -d "$HOME/Pictures/wallpapers-gruvbox" ]]; then
+    echo "Cloning Gruvbox wallpapers..."
+    git clone --depth=1 https://github.com/AngelJumbo/gruvbox-wallpapers.git /tmp/gruvbox-walls
+    mkdir -p "$HOME/Pictures/wallpapers-gruvbox"
+    cp -r /tmp/gruvbox-walls/wallpapers/* "$HOME/Pictures/wallpapers-gruvbox/"
 fi
 
 # Dot cursor (light)

@@ -1,13 +1,13 @@
 # Hyprland Config
 
-A minimal Hyprland rice with Nord & Catppuccin Mocha themes.
+A minimal Hyprland rice with Nord, Catppuccin Mocha & Gruvbox Dark themes.
 
 ## Themes
 
-| Nord | Catppuccin Mocha |
-|---|---|
-| ![Nord](screenshots/nord.png) | ![Catppuccin Mocha](screenshots/catpuccin-mocha.png) |
-| ![Nord terminal](screenshots/nord-terminal.png) | ![Catppuccin terminal](screenshots/catpuccin-mocha-terminal.png) |
+| Nord | Catppuccin Mocha | Gruvbox Dark |
+|---|---|---|
+| ![Nord](screenshots/nord.png) | ![Catppuccin Mocha](screenshots/catpuccin-mocha.png) | ![Gruvbox](screenshots/gruvbox.png) |
+| ![Nord terminal](screenshots/nord-terminal.png) | ![Catppuccin terminal](screenshots/catpuccin-mocha-terminal.png) | ![Gruvbox terminal](screenshots/gruvbox-terminal.png) |
 
 ## Features
 
@@ -20,7 +20,7 @@ A minimal Hyprland rice with Nord & Catppuccin Mocha themes.
 - **swaybg** — wallpaper (switches with theme)
 - **Flameshot** — `Super+Shift+S` region screenshot → clipboard
 - **Night light** — `Super+N` toggles hyprsunset (4500K)
-- **Theme switcher** — `Super+Shift+T` toggles Nord ↔ Catppuccin Mocha (colors, wallpapers, GTK theme)
+- **Theme switcher** — `Super+Shift+T` toggles Nord ↔ Catppuccin Mocha ↔ Gruvbox (colors, wallpapers, GTK theme, Brave theme)
 - **Bluetooth** — rofi-based scan/pair/connect/disconnect
 - **System tray** — toggle arrow in Waybar
 
@@ -56,8 +56,8 @@ cd ~/dotfiles
 The script will:
 1. Install all packages (Hyprland, Waybar, Rofi, Kitty, Dunst, mpd, rmpc, etc.)
 2. Install AUR packages (bibata-cursor-theme-bin, hyprsunset)
-3. Download Nordic + Catppuccin Mocha GTK themes
-4. Clone wallpaper repos (nordic-wallpapers + walls-catppuccin-mocha)
+3. Download Nordic, Catppuccin Mocha & Gruvbox GTK themes
+4. Clone wallpaper repos (nordic-wallpapers, walls-catppuccin-mocha, gruvbox-wallpapers)
 5. Symlink config files into `~/.config/`
 6. Enable services (bluetooth, mpd)
 
@@ -65,7 +65,7 @@ Reboot or restart Hyprland after install.
 
 ## Cursor
 
-Bibata-Modern-Classic — set via env, GTK settings, xsettingsd, and gsettings.
+Dot-Light — set via env, GTK settings, xsettingsd, and gsettings.
 
 ## Monitor Layout
 

@@ -1,5 +1,5 @@
 #!/bin/bash
-# Theme switcher: Nord / Catppuccin Mocha / Retro Minimalism
+# Theme switcher: Nord / Catppuccin Mocha / Gruvbox Dark
 
 CACHE_FILE="/tmp/current-theme"
 C="${HOME}/.config"
@@ -20,11 +20,11 @@ declare -A CTP=(
     [red]="#f38ba8" [orange]="#fab387" [yellow]="#f9e2af" [green]="#a6e3a1" [purple]="#cba6f7"
 )
 
-declare -A RETRO=(
-    [bg]="#161616" [surface]="#000000" [surface2]="#222222" [muted]="#404040"
-    [fg]="#d8d8d8" [fg2]="#9b9b9b" [fg3]="#efefef"
-    [teal]="#207874" [cyan]="#3aad9e" [blue]="#4477cc" [dark_blue]="#335599"
-    [red]="#e04444" [orange]="#ff723e" [yellow]="#d4aa44" [green]="#44aa66" [purple]="#8866bb"
+declare -A GRUV=(
+    [bg]="#1d2021" [surface]="#282828" [surface2]="#32302f" [muted]="#504945"
+    [fg]="#ebdbb2" [fg2]="#d5c4a1" [fg3]="#fbf1c7"
+    [teal]="#689d6a" [cyan]="#8ec07c" [blue]="#458588" [dark_blue]="#83a598"
+    [red]="#cc241d" [orange]="#d65d0e" [yellow]="#d79921" [green]="#98971a" [purple]="#b16286"
 )
 
 # Build mapping: each theme has a nord->theme mapping
@@ -36,7 +36,7 @@ build_map() {
 }
 
 get_palette() {
-    case "$1" in nord) echo "NORD" ;; catppuccin) echo "CTP" ;; retro) echo "RETRO" ;; esac
+    case "$1" in nord) echo "NORD" ;; catppuccin) echo "CTP" ;; gruvbox) echo "GRUV" ;; esac
 }
 
 apply_theme() {
@@ -52,21 +52,21 @@ apply_theme() {
 
 # ── Main ────────────────────────────────────────────────────
 
-THEMES="nord\ncatppuccin\nretro"
+THEMES="nord\ncatppuccin\ngruvbox"
 
 if [[ "$1" == "menu" ]]; then
     CURRENT=$(cat "$CACHE_FILE" 2>/dev/null || echo "nord")
     THEME=$(printf "$THEMES" | rofi -dmenu -p "Theme" -mesg "Current: ${CURRENT}" -select "$CURRENT")
     [[ -z "$THEME" ]] && exit 0
-elif [[ "$1" == "nord" || "$1" == "catppuccin" || "$1" == "retro" ]]; then
+elif [[ "$1" == "nord" || "$1" == "catppuccin" || "$1" == "gruvbox" ]]; then
     THEME="$1"
 else
     CURRENT=$(cat "$CACHE_FILE" 2>/dev/null || echo "nord")
     if [[ "$1" == "toggle" ]]; then
         case "$CURRENT" in
             nord) THEME="catppuccin" ;;
-            catppuccin) THEME="retro" ;;
-            retro) THEME="nord" ;;
+            catppuccin) THEME="gruvbox" ;;
+            gruvbox) THEME="nord" ;;
         esac
     else
         echo "$CURRENT"
@@ -109,11 +109,11 @@ fi
 
 WALL_DIR_NORD="$HOME/Pictures/wallpapers"
 WALL_DIR_CTP="$HOME/Pictures/wallpapers-catppuccin"
-WALL_DIR_RETRO="$HOME/Pictures/wallpapers-retro"
+WALL_DIR_GRUV="$HOME/Pictures/wallpapers-gruvbox"
 
 case "$THEME" in
     catppuccin) WDIR="$WALL_DIR_CTP" ;;
-    retro)      WDIR="$WALL_DIR_RETRO" ;;
+    gruvbox)    WDIR="$WALL_DIR_GRUV" ;;
     *)          WDIR="$WALL_DIR_NORD" ;;
 esac
 echo "$WDIR" > "$HOME/.cache/current-wallpaper-dir"
@@ -128,7 +128,7 @@ fi
 
 case "$THEME" in
     catppuccin) GTK_THEME="Catppuccin-Mocha" ;;
-    retro)      GTK_THEME="ClassicPlatinumStreamlined" ;;
+    gruvbox)    GTK_THEME="Gruvbox" ;;
     *)          GTK_THEME="Nordic" ;;
 esac
 

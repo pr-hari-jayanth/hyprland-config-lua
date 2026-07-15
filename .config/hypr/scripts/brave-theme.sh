@@ -56,7 +56,10 @@ if loaded:
     print(f"Brave theme set to {theme_name}")
 else:
     prefs.setdefault('extensions', {}).setdefault('theme', {})
+    prefs['extensions']['theme']['id'] = ""
     prefs['extensions']['theme']['system_theme'] = 1
+    prefs.setdefault('browser', {}).setdefault('theme', {})
+    prefs['browser']['theme']['color_scheme2'] = 2
     print(f"Brave theme extensions not loaded yet. Load unpacked in brave://extensions:")
     print(f"  {os.path.expanduser('~')}/.config/brave-themes/{theme_name}/")
     print(f"Brave will follow GTK dark mode (system theme) until loaded.")

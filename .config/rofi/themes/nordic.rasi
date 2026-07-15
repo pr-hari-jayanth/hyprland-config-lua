@@ -1,0 +1,97 @@
+* {
+    bg: #1e1e2e;
+    surface: #313244;
+    fg: #cdd6f4;
+    blue: #89b4fa;
+    cyan: #89dceb;
+    red: #f38ba8;
+    yellow: #f9e2af;
+    muted: #585b70;
+
+    font: "JetBrainsMono Nerd Font 12";
+    background-color: var(bg);
+    text-color: var(fg);
+}
+
+window {
+    background-color: transparent;
+    padding: 4px;
+    border-radius: 10px;
+    width: 600px;
+}
+
+mainbox {
+    background-color: var(bg);
+    padding: 0;
+    border-radius: 8px;
+}
+
+inputbar {
+    background-color: var(surface);
+    text-color: var(fg);
+    padding: 10px 14px;
+    border-radius: 8px 8px 0 0;
+    spacing: 8px;
+    children: [entry];
+}
+
+entry {
+    background-color: transparent;
+    text-color: var(fg);
+    placeholder-color: var(muted);
+    placeholder: "Search...";
+}
+
+listview {
+    background-color: var(bg);
+    lines: 8;
+    spacing: 2px;
+    padding: 4px 6px;
+    border-radius: 0 0 8px 8px;
+}
+
+element {
+    background-color: transparent;
+    text-color: var(fg);
+    padding: 8px 10px;
+}
+
+element selected {
+    background-color: transparent;
+    text-color: var(cyan);
+    border: 0px 0px 2px 0px;
+    border-color: var(cyan);
+}
+
+element-icon {
+    size: 0px;
+}
+
+element-text {
+    text-color: inherit;
+    vertical-align: 0.5;
+}
+
+button {
+    padding: 8px 14px;
+    background-color: transparent;
+    text-color: var(fg);
+}
+
+button selected {
+    background-color: transparent;
+    text-color: var(cyan);
+    border: 0px 0px 2px 0px;
+    border-color: var(cyan);
+}
+
+message {
+    background-color: var(surface);
+    padding: 6px 14px;
+    border-radius: 0 0 8px 8px;
+}
+
+textbox {
+    text-color: var(fg);
+    padding: 6px 14px;
+}

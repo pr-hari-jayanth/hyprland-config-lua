@@ -69,12 +69,28 @@ if [[ ! -d "$HOME/Pictures/wallpapers-catppuccin" ]]; then
     git clone --depth=1 https://github.com/orangci/walls-catppuccin-mocha.git "$HOME/Pictures/wallpapers-catppuccin"
 fi
 
-# Bibata cursor (if AUR failed)
-if [[ ! -d "/usr/share/icons/Bibata-Modern-Classic" && ! -d "$HOME/.icons/Bibata-Modern-Classic" ]]; then
-    echo "Downloading Bibata cursor..."
+# Retro wallpapers
+if [[ ! -d "$HOME/Pictures/wallpapers-retro" ]]; then
+    echo "Downloading retro wallpapers..."
+    mkdir -p "$HOME/Pictures/wallpapers-retro"
+    git clone --depth=1 https://github.com/D3Ext/aesthetic-wallpapers.git /tmp/aesthetic-walls
+    for f in gruvbox_retrocity retro_city retro_market retro2_live retro_live \
+        neocity neocity2 neon-car2 neon-circle neon-lights neon-shacks-nord \
+        pixel_big_city pixel-city sunset_city plane_sunset nord_dark_city \
+        sunset-xfksfuywx japan_anime_city cityscape-sunset-nord \
+        abstract beach_landscape mountains needing-space ocean_with_cloud \
+        purple-mountain shape-abstract; do
+        find /tmp/aesthetic-walls/images/ -name "${f}.*" -exec cp {} "$HOME/Pictures/wallpapers-retro/" \; 2>/dev/null || true
+    done
+fi
+
+# Dot cursor (light)
+if [[ ! -d "$HOME/.icons/Dot-Light" ]]; then
+    echo "Downloading TheDot cursor..."
     mkdir -p "$HOME/.icons"
-    curl -L "https://github.com/ful1e5/Bibata_Cursor/releases/latest/download/Bibata-Modern-Classic.tar.xz" -o /tmp/bibata.tar.xz
-    tar xf /tmp/bibata.tar.xz -C "$HOME/.icons/"
+    curl -L "https://files06.pling.com/api/files/download/j/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTU0Nzc2Mjc1OCwibyI6IjEiLCJzIjoiNmU2YTNjY2IwMjYyMmM5MjFmZWZiYzI3OTJmOTlhMDY3Yjc4ZjQ5ZjU4Njc3NzRhZTllZmFmYjliNjIxOTg3YzU0MDgyODNmZmE3MmJiYTVlMGQ3YzJiMmI2OTNhYjQyZGQ5OWNhYzA2NmQxZjI1NmYzOTBmNjQwOTc2YjI3ZDAiLCJ0IjoxNzgzMDk0MjMwLCJzdGZwIjpudWxsLCJzdGlwIjoiMTA2LjUxLjE3NS4xMDEifQ.pQsfC62gPjlrJa-Bw1IE8FIq7CqCZD-a7GHb1KHyKpw/thedot0.6.tar.gz" -o /tmp/thedot.tar.gz
+    tar xzf /tmp/thedot.tar.gz -C /tmp/
+    cp -r /tmp/thedot/thedot0.6/Dot-Light "$HOME/.icons/"
 fi
 
 # ── 3. Config files ─────────────────────────────────────────────────

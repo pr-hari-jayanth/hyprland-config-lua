@@ -6,6 +6,7 @@ configuration {
     drun-display-format: "{name}";
     font: "JetBrainsMono Nerd Font 12";
     terminal: "kitty";
+    hide-scrollbar: true;
 }
 
 @theme "nordic"

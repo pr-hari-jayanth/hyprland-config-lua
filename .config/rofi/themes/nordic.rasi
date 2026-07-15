@@ -43,6 +43,7 @@ textbox-search {
     str: "";
     vertical-align: 0.5;
     padding: 0 2px;
+    expand: false;
 }
 
 entry {

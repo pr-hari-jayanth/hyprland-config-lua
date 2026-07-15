@@ -30,9 +30,9 @@ mainbox {
 inputbar {
     background-color: var(surface);
     text-color: var(fg);
-    padding: 10px 14px;
+    padding: 10px 4px;
     border-radius: 12px 12px 0 0;
-    spacing: 8px;
+    spacing: 4px;
     children: [textbox-search, entry];
 }
 
@@ -42,6 +42,7 @@ textbox-search {
     size: 24px;
     str: "";
     vertical-align: 0.5;
+    padding: 0 2px;
 }
 
 entry {
@@ -55,7 +56,7 @@ listview {
     background-color: var(bg);
     columns: 2;
     spacing: 6px;
-    padding: 8px 10px 10px 10px;
+    padding: 6px 6px 8px 6px;
     border-radius: 0 0 12px 12px;
     layout: vertical;
     cycle: true;

@@ -1,12 +1,12 @@
 * {
-    bg: #1e1e2e;
-    surface: #313244;
-    fg: #cdd6f4;
-    blue: #89b4fa;
-    cyan: #89dceb;
-    red: #f38ba8;
-    yellow: #f9e2af;
-    muted: #585b70;
+    bg: #1d2021;
+    surface: #282828;
+    fg: #ebdbb2;
+    blue: #458588;
+    cyan: #8ec07c;
+    red: #cc241d;
+    yellow: #d79921;
+    muted: #504945;
 
     font: "JetBrainsMono Nerd Font 12";
     background-color: var(bg);
@@ -16,55 +16,69 @@
 window {
     background-color: transparent;
     padding: 4px;
-    border-radius: 10px;
-    width: 600px;
+    border-radius: 14px;
+    width: 720px;
 }
 
 mainbox {
     background-color: var(bg);
     padding: 0;
-    border-radius: 8px;
+    border-radius: 12px;
+    children: [inputbar, listview];
 }
 
 inputbar {
     background-color: var(surface);
     text-color: var(fg);
     padding: 10px 14px;
-    border-radius: 8px 8px 0 0;
+    border-radius: 12px 12px 0 0;
     spacing: 8px;
-    children: [entry];
+    children: [textbox-search, entry];
+}
+
+textbox-search {
+    background-color: transparent;
+    text-color: var(muted);
+    size: 24px;
+    str: "";
+    vertical-align: 0.5;
 }
 
 entry {
     background-color: transparent;
     text-color: var(fg);
     placeholder-color: var(muted);
-    placeholder: "Search...";
+    placeholder: "Search apps...";
 }
 
 listview {
     background-color: var(bg);
-    lines: 8;
-    spacing: 2px;
-    padding: 4px 6px;
-    border-radius: 0 0 8px 8px;
+    columns: 2;
+    spacing: 0px;
+    padding: 8px 10px 10px 10px;
+    border-radius: 0 0 12px 12px;
+    layout: vertical;
+    cycle: true;
 }
 
 element {
     background-color: transparent;
     text-color: var(fg);
     padding: 8px 10px;
+    border-radius: 10px;
+    orientation: vertical;
 }
 
 element selected {
-    background-color: transparent;
+    background-color: var(surface);
     text-color: var(cyan);
-    border: 0px 0px 2px 0px;
+    border: 2px;
     border-color: var(cyan);
 }
 
 element-icon {
-    size: 0px;
+    size: 36px;
+    padding: 4px;
 }
 
 element-text {
@@ -88,7 +102,7 @@ button selected {
 message {
     background-color: var(surface);
     padding: 6px 14px;
-    border-radius: 0 0 8px 8px;
+    border-radius: 0 0 12px 12px;
 }
 
 textbox {

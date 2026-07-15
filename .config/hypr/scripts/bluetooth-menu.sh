@@ -1,113 +1,170 @@
 #!/bin/bash
 # Rofi bluetooth manager
 
-trunc() { echo "$1" | cut -c1-"$2"; }
+notify() { notify-send "Bluetooth" "$1"; }
 
-POWERED=$(bluetoothctl show 2>/dev/null | grep Powered | awk '{print $2}')
+get_powered() {
+    bluetoothctl show 2>/dev/null | grep Powered | awk '{print $2}'
+}
 
-if [[ "$POWERED" == "yes" ]]; then
-    TOGGLE_ACTION="power off"
-    TOGGLE_LABEL="Disable Bluetooth"
-    STATUS="On"
-    EXTRA="Scan for new devices"
-else
-    TOGGLE_ACTION="power on"
-    TOGGLE_LABEL="Enable Bluetooth"
-    STATUS="Off"
-    EXTRA=""
-fi
+get_connected() {
+    local mac="$1"
+    bluetoothctl info "$mac" 2>/dev/null | grep Connected | awk '{print $2}'
+}
 
-declare -A DEV_MAP
-DEV_MENU=""
-while read -r mac name; do
-    [[ -z "$mac" ]] && continue
-    info=$(bluetoothctl info "$mac" 2>/dev/null)
-    connected=$(echo "$info" | grep Connected | awk '{print $2}')
-    icon="󰂲"
-    [[ "$connected" == "yes" ]] && icon="󰂯"
-    short=$(trunc "$name" 25)
-    DEV_MAP["$short"]="$mac"
-    DEV_MENU="$DEV_MENU\n$icon  $short"
-done < <(bluetoothctl devices)
+get_paired() {
+    local mac="$1"
+    bluetoothctl info "$mac" 2>/dev/null | grep Paired | awk '{print $2}'
+}
 
-MENU="$TOGGLE_LABEL"
-[[ -n "$EXTRA" ]] && MENU="$MENU\n$EXTRA"
-[[ -n "$DEV_MENU" ]] && MENU="$MENU$DEV_MENU"
+lookup_index() {
+    local needle="$1"; shift
+    local i=0
+    for item; do
+        [[ "$item" == "$needle" ]] && echo "$i" && return
+        ((i++))
+    done
+    echo -1
+}
 
-CHOICE=$(echo -e "$MENU" | rofi -dmenu -p "Bluetooth $STATUS" -theme-str 'listview {columns:1; lines:12;}')
-[[ -z "$CHOICE" ]] && exit 0
+main_menu() {
+    local powered
+    powered=$(get_powered)
+    local toggle
+    if [[ "$powered" == "yes" ]]; then
+        toggle="  Turn Bluetooth Off"
+    else
+        toggle="  Turn Bluetooth On"
+    fi
 
-if [[ "$CHOICE" == "$TOGGLE_LABEL" ]]; then
-    bluetoothctl $TOGGLE_ACTION
-    exit 0
-fi
-
-if [[ "$CHOICE" == "Scan for new devices" ]]; then
-    notify-send "Bluetooth" "Scanning..."
-    bluetoothctl scan on &
-    SCAN_PID=$!
-    sleep 8
-    kill "$SCAN_PID" 2>/dev/null
-    bluetoothctl scan off 2>/dev/null
-
-    declare -A FOUND_MAP
-    FOUND_MENU=""
+    local labels=() macs=()
     while read -r mac name; do
-        info=$(bluetoothctl info "$mac" 2>/dev/null)
-        paired=$(echo "$info" | grep Paired | awk '{print $2}')
-        [[ "$paired" == "yes" ]] && continue
-        short=$(trunc "$name" 25)
-        FOUND_MAP["$short"]="$mac"
-        FOUND_MENU="$FOUND_MENU\n  $short"
+        [[ -z "$mac" ]] && continue
+        local connected
+        connected=$(get_connected "$mac")
+        local icon=""
+        [[ "$connected" == "yes" ]] && icon=""
+        labels+=("$icon  $name")
+        macs+=("$mac")
     done < <(bluetoothctl devices)
 
-    if [[ -z "$FOUND_MENU" ]]; then
-        notify-send "Bluetooth" "No new devices found"
+    local menu="$toggle"
+    for ((i=0; i<${#labels[@]}; i++)); do
+        menu="$menu\n${labels[$i]}"
+    done
+    menu="$menu\n  Add Device"
+
+    local choice
+    choice=$(echo -e "$menu" | rofi -dmenu -p "Bluetooth" -theme-str 'listview {columns:1; lines:14;}')
+    [[ -z "$choice" ]] && exit 0
+
+    if [[ "$choice" == *"Turn Bluetooth"* ]]; then
+        if [[ "$powered" == "yes" ]]; then
+            bluetoothctl power off && notify "Bluetooth off"
+        else
+            bluetoothctl power on && notify "Bluetooth on"
+        fi
         exit 0
     fi
 
-    TARGET=$(echo -e "Cancel$FOUND_MENU" | rofi -dmenu -p "Select device to pair" -theme-str 'listview {columns:1; lines:8;}')
-    [[ -z "$TARGET" || "$TARGET" == "Cancel" ]] && exit 0
-
-    SHORT=$(echo "$TARGET" | sed 's/^[^ ]*  //')
-    MAC="${FOUND_MAP[$SHORT]}"
-    if [[ -n "$MAC" ]]; then
-        bluetoothctl pair "$MAC"
-        sleep 1
-        bluetoothctl trust "$MAC"
-        bluetoothctl connect "$MAC"
-        notify-send "Bluetooth" "Paired & connected to $SHORT"
+    if [[ "$choice" == *"Add Device"* ]]; then
+        add_device
+        exit 0
     fi
-    exit 0
-fi
 
-SHORT=$(echo "$CHOICE" | sed 's/^[^ ]*  //')
-MAC="${DEV_MAP[$SHORT]}"
-[[ -z "$MAC" ]] && exit 0
+    local idx
+    idx=$(lookup_index "$choice" "${labels[@]}")
+    [[ "$idx" -lt 0 ]] && exit 0
+    device_actions "${macs[$idx]}" "$(echo "${labels[$idx]}" | sed 's/^[^ ]*  //')"
+}
 
-INFO=$(bluetoothctl info "$MAC" 2>/dev/null)
-CONNECTED=$(echo "$INFO" | grep Connected | awk '{print $2}')
-PAIRED=$(echo "$INFO" | grep Paired | awk '{print $2}')
+device_actions() {
+    local mac="$1" name="$2"
+    local connected
+    connected=$(get_connected "$mac")
+    local actions
+    if [[ "$connected" == "yes" ]]; then
+        actions="睊  Disconnect\n  Remove Device\nCancel"
+    else
+        actions="  Connect\n  Remove Device\nCancel"
+    fi
 
-if [[ "$CONNECTED" == "yes" ]]; then
-    ACTION="disconnect"
-    ACTION_LABEL="Disconnect"
-elif [[ "$PAIRED" == "yes" ]]; then
-    ACTION="connect"
-    ACTION_LABEL="Connect"
-else
-    ACTION="pair"
-    ACTION_LABEL="Pair"
-fi
+    local action
+    action=$(echo -e "$actions" | rofi -dmenu -p "$name" -theme-str 'listview {columns:1; lines:3;}')
+    [[ -z "$action" || "$action" == "Cancel" ]] && exit 0
 
-CONFIRM=$(echo -e "$ACTION_LABEL\nRemove Device\nCancel" | rofi -dmenu -p "$SHORT" -theme-str 'listview {columns:1; lines:3;}')
-case "$CONFIRM" in
-    "$ACTION_LABEL")
-        bluetoothctl $ACTION "$MAC"
-        notify-send "Bluetooth" "$ACTION_LABEL $SHORT"
-        ;;
-    "Remove Device")
-        bluetoothctl remove "$MAC"
-        notify-send "Bluetooth" "Removed $SHORT"
-        ;;
-esac
+    case "$action" in
+        *"Disconnect"*)
+            bluetoothctl disconnect "$mac" && notify "Disconnected $name" ;;
+        *"Connect"*)
+            bluetoothctl connect "$mac" && notify "Connected $name" ;;
+        *"Remove"*)
+            local confirm
+            confirm=$(echo -e "  Yes, Remove\nCancel" | rofi -dmenu -p "Remove $name?" -theme-str 'listview {columns:1; lines:2;}')
+            if [[ "$confirm" == *"Remove"* ]]; then
+                bluetoothctl remove "$mac" && notify "Removed $name"
+            fi
+            ;;
+    esac
+}
+
+add_device() {
+    local powered
+    powered=$(get_powered)
+    if [[ "$powered" != "yes" ]]; then
+        notify "Turn Bluetooth on first"
+        exit 0
+    fi
+
+    notify "Scanning..."
+    bluetoothctl scan on &
+    local scan_pid=$!
+    sleep 10
+    kill "$scan_pid" 2>/dev/null
+    bluetoothctl scan off 2>/dev/null
+
+    # Collect already-paired MACs for filtering
+    local paired_macs=""
+    while read -r mac _; do
+        paired_macs="$paired_macs $mac"
+    done < <(bluetoothctl paired-devices)
+
+    local labels=() macs=()
+    while read -r mac name; do
+        [[ -z "$mac" ]] && continue
+        # Skip already paired
+        [[ "$paired_macs" == *"$mac"* ]] && continue
+        labels+=("  $name")
+        macs+=("$mac")
+    done < <(bluetoothctl devices)
+
+    if [[ ${#labels[@]} -eq 0 ]]; then
+        notify "No new devices found"
+        exit 0
+    fi
+
+    local menu=""
+    for ((i=0; i<${#labels[@]}; i++)); do
+        menu="$menu\n${labels[$i]}"
+    done
+
+    local choice
+    choice=$(echo -e "$menu" | rofi -dmenu -p "Select device" -theme-str 'listview {columns:1; lines:10;}')
+    [[ -z "$choice" ]] && exit 0
+
+    local idx
+    idx=$(lookup_index "$choice" "${labels[@]}")
+    [[ "$idx" -lt 0 ]] && exit 0
+
+    local mac="${macs[$idx]}"
+    local name
+    name=$(echo "${labels[$idx]}" | sed 's/^[^ ]*  //')
+
+    notify "Pairing with $name..."
+    bluetoothctl pair "$mac"
+    sleep 1
+    bluetoothctl trust "$mac"
+    bluetoothctl connect "$mac" && notify "Connected to $name" || notify "Pairing complete for $name"
+}
+
+main_menu

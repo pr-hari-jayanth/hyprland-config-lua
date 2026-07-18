@@ -30,7 +30,7 @@ hl.on("hyprland.start", function()
 end)
 
 -- Environment
-hl.env("XCURSOR_THEME", "Dot-Light")
+hl.env("XCURSOR_THEME", "Adwaita")
 hl.env("XCURSOR_SIZE", "24")
 
 -- Monitors

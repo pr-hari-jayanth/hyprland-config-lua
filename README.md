@@ -23,7 +23,7 @@ A minimal Hyprland rice with Nord, Catppuccin Mocha, Gruvbox Dark & Monochrome t
 - **Theme switcher** — `Super+Shift+T` cycles Nord ↔ Catppuccin Mocha ↔ Gruvbox Dark ↔ Monochrome (colors, wallpapers, GTK theme, Brave theme, Waybar style)
 - **Bluetooth** — rofi-based scan/pair/connect/disconnect
 - **System tray** — toggle arrow in Waybar
-- **WhiteSur-cursors** — white macOS-style cursor for dark backgrounds
+- **Adwaita** — white macOS-style cursor for dark backgrounds
 
 ## Keybinds
 
@@ -66,7 +66,7 @@ Reboot or restart Hyprland after install.
 
 ## Cursor
 
-WhiteSur-cursors — set via env, GTK settings, xsettingsd, and gsettings.
+Adwaita — set via env, GTK settings, xsettingsd, and gsettings.
 
 ## Monitor Layout
 

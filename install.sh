@@ -104,14 +104,6 @@ if [[ ! -d "$HOME/Pictures/wallpapers-black" ]]; then
     mkdir -p "$HOME/Pictures/wallpapers-black"
 fi
 
-# WhiteSur cursors (white on dark backgrounds)
-if [[ ! -d "$HOME/.icons/WhiteSur-cursors" ]]; then
-    echo "Downloading WhiteSur cursors..."
-    mkdir -p "$HOME/.icons"
-    curl -L "https://github.com/vinceliuice/WhiteSur-cursors/releases/download/v1.0.0/WhiteSur-cursors.tar.xz" -o /tmp/whitesur-cursors.tar.xz
-    tar xf /tmp/whitesur-cursors.tar.xz -C "$HOME/.icons/"
-fi
-
 # Iosevka Nerd Font (for monochrome theme)
 if [[ ! -d "$HOME/.fonts/Iosevka Nerd Font" ]]; then
     echo "Installing Iosevka Nerd Font..."

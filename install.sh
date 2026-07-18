@@ -98,13 +98,34 @@ if [[ ! -d "$HOME/Pictures/wallpapers-gruvbox" ]]; then
     cp -r /tmp/gruvbox-walls/wallpapers/* "$HOME/Pictures/wallpapers-gruvbox/"
 fi
 
-# Dot cursor (light)
-if [[ ! -d "$HOME/.icons/Dot-Light" ]]; then
-    echo "Downloading TheDot cursor..."
+# Black theme wallpapers
+if [[ ! -d "$HOME/Pictures/wallpapers-black" ]]; then
+    echo "Creating black wallpapers directory..."
+    mkdir -p "$HOME/Pictures/wallpapers-black"
+fi
+
+# WhiteSur cursors (white on dark backgrounds)
+if [[ ! -d "$HOME/.icons/WhiteSur-cursors" ]]; then
+    echo "Downloading WhiteSur cursors..."
     mkdir -p "$HOME/.icons"
-    curl -L "https://files06.pling.com/api/files/download/j/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTU0Nzc2Mjc1OCwibyI6IjEiLCJzIjoiNmU2YTNjY2IwMjYyMmM5MjFmZWZiYzI3OTJmOTlhMDY3Yjc4ZjQ5ZjU4Njc3NzRhZTllZmFmYjliNjIxOTg3YzU0MDgyODNmZmE3MmJiYTVlMGQ3YzJiMmI2OTNhYjQyZGQ5OWNhYzA2NmQxZjI1NmYzOTBmNjQwOTc2YjI3ZDAiLCJ0IjoxNzgzMDk0MjMwLCJzdGZwIjpudWxsLCJzdGlwIjoiMTA2LjUxLjE3NS4xMDEifQ.pQsfC62gPjlrJa-Bw1IE8FIq7CqCZD-a7GHb1KHyKpw/thedot0.6.tar.gz" -o /tmp/thedot.tar.gz
-    tar xzf /tmp/thedot.tar.gz -C /tmp/
-    cp -r /tmp/thedot/thedot0.6/Dot-Light "$HOME/.icons/"
+    curl -L "https://github.com/vinceliuice/WhiteSur-cursors/releases/download/v1.0.0/WhiteSur-cursors.tar.xz" -o /tmp/whitesur-cursors.tar.xz
+    tar xf /tmp/whitesur-cursors.tar.xz -C "$HOME/.icons/"
+fi
+
+# Iosevka Nerd Font (for monochrome theme)
+if [[ ! -d "$HOME/.fonts/Iosevka Nerd Font" ]]; then
+    echo "Installing Iosevka Nerd Font..."
+    mkdir -p "$HOME/.fonts"
+    curl -L "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/Iosevka.zip" -o /tmp/iosevka.zip
+    unzip -o /tmp/iosevka.zip -d "$HOME/.fonts/Iosevka Nerd Font/"
+    fc-cache -f
+fi
+
+# Blackout GTK theme (standalone pure black theme)
+if [[ ! -d "$HOME/.themes/Blackout" ]]; then
+    echo "Installing Blackout GTK theme..."
+    mkdir -p "$HOME/.themes"
+    cp -r "$DOTFILES/.themes/Blackout" "$HOME/.themes/"
 fi
 
 # ── 3. Config files ─────────────────────────────────────────────────

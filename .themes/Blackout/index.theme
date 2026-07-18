@@ -8,5 +8,5 @@ Encoding=UTF-8
 GtkTheme=Blackout
 MetacityTheme=Blackout
 IconTheme=breeze-dark
-CursorTheme=Dot-Light
+CursorTheme=WhiteSur-cursors
 ButtonLayout=icon:minimize,maximize,close

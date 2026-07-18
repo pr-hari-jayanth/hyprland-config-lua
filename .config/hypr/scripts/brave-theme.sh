@@ -11,12 +11,13 @@ get_ext_id() {
         nord)        cat "${THEME_DIR}/nord/id.txt" 2>/dev/null || echo "ooapklbilecbiabkfpoppoebgeloolbo" ;;
         catppuccin)  cat "${THEME_DIR}/catppuccin/id.txt" 2>/dev/null || echo "hbbelmlhjmdapckbpeebgodfocomofhg" ;;
         gruvbox)     cat "${THEME_DIR}/gruvbox/id.txt" 2>/dev/null || echo "aanibakamkkajfpgnanachanaaoncgfa" ;;
+        black)       cat "${THEME_DIR}/black/id.txt" 2>/dev/null || echo "afacaneafpaagmklakajeacnaehjakag" ;;
         *)           echo "" ;;
     esac
 }
 
 if [[ -z "$1" ]]; then
-    echo "Usage: $0 <nord|catppuccin|gruvbox>"
+    echo "Usage: $0 <nord|catppuccin|gruvbox|black>"
     exit 1
 fi
 

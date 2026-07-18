@@ -1,0 +1,28 @@
+{
+  "manifest_version": 3,
+  "version": "1.0",
+  "name": "Black (theme-switcher)",
+  "description": "Full Black theme for Brave",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmrErNWb65f1106IpwL+hIMEnfyP+O+OHphJBxvnuKxPlZqPXJATGdRkO2J3rQcOkpg4IT55UDZqOyRdeHuvhly+eccXTMUPXVhEH91QnqV43XRAVwKTurcQxzehvILv2xqB8CIn5RLAxil6YUuIaEy611A2tFY3/BxldLqZHxiSpiiT22/NmBAwMweAZvRBuNXLqQTzxAN6BsIpNcZvOOezj4nrM05QJkNtfZUK/LJ4yZSt+NKU3vFGrOJOyu9b0Pii7wSUJ5CXIAdoLlqyuEOLPo2YhL7GZMKbWIA2LjozjOeA7xVw7xjxhD0jCFk9WBx1pc8uG3j/XaNOQynr7LQIDAQAB",
+  "theme": {
+    "colors": {
+      "frame": [0, 0, 0],
+      "frame_inactive": [13, 13, 13],
+      "background_tab": [0, 0, 0],
+      "background_tab_inactive": [13, 13, 13],
+      "tab_background_text": [224, 224, 224],
+      "toolbar": [13, 13, 13],
+      "toolbar_text": [224, 224, 224],
+      "toolbar_button_icon": [224, 224, 224],
+      "omnibox_background": [26, 26, 26],
+      "omnibox_text": [224, 224, 224],
+      "omnibox_dropdown_background": [0, 0, 0],
+      "omnibox_dropdown_text": [224, 224, 224],
+      "bookmark_text": [224, 224, 224],
+      "button_background": [0, 229, 255],
+      "ntp_background": [0, 0, 0],
+      "ntp_text": [224, 224, 224],
+      "ntp_link": [0, 229, 255]
+    }
+  }
+}

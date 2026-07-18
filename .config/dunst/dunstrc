@@ -19,12 +19,12 @@
     horizontal_padding = 12
     text_icon_padding = 8
     frame_width = 1
-    frame_color = "#89dceb"
+    frame_color = "#00b8d4"
     gap_size = 6
     separator_color = frame
-    corner_radius = 8
+    corner_radius = 0
     sort = yes
-    font = "JetBrainsMono Nerd Font 10"
+    font = Iosevka Nerd Font 10
     line_height = 0
     markup = full
     format = "<b>%s</b>\n%b"
@@ -52,19 +52,19 @@
     ignore_dbusclose = false
 
 [urgency_low]
-    background = "#313244"
-    foreground = "#cdd6f4"
+    background = "#0d0d0d"
+    foreground = "#e0e0e0"
     timeout = 5
-    frame_color = "#89b4fa"
+    frame_color = "#2979ff"
 
 [urgency_normal]
-    background = "#313244"
-    foreground = "#cdd6f4"
+    background = "#0d0d0d"
+    foreground = "#e0e0e0"
     timeout = 10
-    frame_color = "#89dceb"
+    frame_color = "#00b8d4"
 
 [urgency_critical]
-    background = "#313244"
-    foreground = "#f38ba8"
+    background = "#0d0d0d"
+    foreground = "#ff1744"
     timeout = 0
-    frame_color = "#f38ba8"
+    frame_color = "#ff1744"

@@ -1,0 +1,333 @@
+@define-color theme_fg_color #e0e0e0;
+@define-color theme_text_color #e0e0e0;
+@define-color theme_bg_color #000000;
+@define-color theme_base_color #555555;
+@define-color theme_selected_bg_color #666666;
+@define-color theme_selected_fg_color #ffffff;
+@define-color insensitive_bg_color #000000;
+@define-color insensitive_fg_color #444444;
+@define-color borders #444444;
+@define-color unfocused_borders #222222;
+@define-color warning_color #888888;
+@define-color error_color #888888;
+@define-color success_color #aaaaaa;
+
+.background {
+    background-color: #000000;
+    color: @theme_fg_color;
+}
+
+GtkWindow {
+    background-color: #000000;
+    color: @theme_fg_color;
+}
+
+GtkWindow.toplevel {
+    background-color: #000000;
+}
+
+.background.client-decorated {
+    background-color: #000000;
+}
+
+entry {
+    background-color: #1a1a1a;
+    color: @theme_text_color;
+    border-color: @borders;
+}
+
+button {
+    background-color: #1a1a1a;
+    color: @theme_fg_color;
+    border-color: @borders;
+}
+
+button:hover {
+    background-color: #333333;
+}
+
+button:active {
+    background-color: @theme_selected_bg_color;
+    color: @theme_selected_fg_color;
+}
+
+label {
+    color: @theme_fg_color;
+}
+
+scrollbar {
+    background-color: #000000;
+}
+
+scrollbar slider {
+    background-color: #444444;
+}
+
+scrollbar slider:hover {
+    background-color: #666666;
+}
+
+menu {
+    background-color: #111111;
+    color: @theme_fg_color;
+    border: 1px solid #333333;
+    padding: 4px 0;
+}
+
+menuitem {
+    background-color: transparent;
+    color: @theme_fg_color;
+    padding: 6px 12px;
+    min-height: 20px;
+}
+
+menuitem:hover {
+    background-color: #444444;
+    color: #ffffff;
+}
+
+menuitem separator {
+    background-color: #333333;
+    margin: 4px 0;
+    min-height: 1px;
+}
+
+menuitem:disabled {
+    color: #555555;
+}
+
+menuitem accelerator {
+    color: #888888;
+    padding-left: 24px;
+}
+
+menuitem check,
+menuitem radio {
+    min-width: 16px;
+    min-height: 16px;
+}
+
+tooltip {
+    background-color: #1a1a1a;
+    color: @theme_fg_color;
+    border-color: @borders;
+}
+
+notebook {
+    background-color: #000000;
+    color: @theme_fg_color;
+}
+
+notebook tab {
+    background-color: #000000;
+    color: #888888;
+    border: 1px solid @borders;
+    border-bottom: none;
+}
+
+notebook tab:selected {
+    background-color: #555555;
+    color: #ffffff;
+    border-bottom: 2px solid #aaaaaa;
+}
+
+checkbutton, radiobutton {
+    color: @theme_fg_color;
+}
+
+combobox {
+    background-color: #1a1a1a;
+    color: @theme_fg_color;
+}
+
+paned {
+    background-color: #000000;
+}
+
+scrolledwindow {
+    background-color: #000000;
+}
+
+viewport {
+    background-color: #000000;
+}
+
+frame {
+    border-color: @borders;
+}
+
+separator {
+    color: @borders;
+    background-color: @borders;
+}
+
+statusbar {
+    background-color: #000000;
+    color: @theme_fg_color;
+}
+
+toolbar {
+    background-color: #000000;
+    color: @theme_fg_color;
+    border-color: @borders;
+}
+
+infobar {
+    background-color: #1a1a1a;
+}
+
+headerbar {
+    background-color: #000000;
+    color: @theme_fg_color;
+    border-bottom: 2px solid #555555;
+}
+
+headerbar:backdrop {
+    border-bottom-color: @borders;
+}
+
+dialog {
+    background-color: #000000;
+}
+
+GtkHeaderBar {
+    background-color: #000000;
+    color: @theme_fg_color;
+}
+
+/* Chromium-specific tab selectors */
+notebook header.top {
+    background-color: #000000;
+}
+
+notebook header.top tab {
+    background-color: #000000;
+    color: #888888;
+}
+
+notebook header.top tab:selected {
+    background-color: #555555;
+    color: #ffffff;
+}
+
+/* GTK3 tab styling that Chromium might use */
+notebook tab GtkLabel {
+    color: #888888;
+}
+
+notebook tab:selected GtkLabel {
+    color: #ffffff;
+}
+
+notebook tab:checked {
+    background-color: #555555;
+    color: #ffffff;
+}
+
+/* Thunar */
+.thunar toolbar {
+    background-color: #0d0d0d;
+    border-bottom: 1px solid #333333;
+    padding: 4px 8px;
+    spacing: 6px;
+}
+
+.thunar toolbar button {
+    background-color: transparent;
+    color: #cccccc;
+    border: none;
+    border-radius: 3px;
+    padding: 4px 10px;
+    min-height: 26px;
+}
+
+.thunar toolbar button:hover {
+    background-color: #2a2a2a;
+    color: #ffffff;
+}
+
+.thunar toolbar button:active,
+.thunar toolbar button:checked {
+    background-color: #555555;
+    color: #ffffff;
+}
+
+.thunar .standard-view.frame {
+    border: none;
+}
+
+.thunar scrolledwindow.frame.sidebar {
+    background-color: #000000;
+    border-right: 1px solid #333333;
+}
+
+.thunar .path-bar.linked:not(.vertical) > button.path-bar-button {
+    background-color: #1a1a1a;
+    color: #cccccc;
+    border: 1px solid #333333;
+    border-right-width: 0;
+    padding: 3px 12px;
+    min-height: 24px;
+}
+
+.thunar .path-bar.linked:not(.vertical) > button.path-bar-button:last-child {
+    border-right-width: 1px;
+}
+
+.thunar .path-bar.linked:not(.vertical) > button.path-bar-button:hover {
+    background-color: #2a2a2a;
+    color: #ffffff;
+}
+
+.thunar .path-bar.linked:not(.vertical) > button.path-bar-button:checked {
+    background-color: #555555;
+    color: #ffffff;
+    border-color: #555555;
+}
+
+.thunar statusbar {
+    background-color: #000000;
+    color: #999999;
+    border-top: 1px solid #333333;
+    padding: 2px 8px;
+    font-size: 11px;
+}
+
+.thunar > grid.horizontal > paned.horizontal > scrolledwindow.frame.sidebar.shortcuts-pane {
+    background-color: #000000;
+    border-right: 1px solid #333333;
+}
+
+.thunar treeview.view {
+    background-color: #000000;
+    color: #e0e0e0;
+}
+
+.thunar treeview.view:selected {
+    background-color: #555555;
+    color: #ffffff;
+}
+
+.thunar treeview.view:hover {
+    background-color: #111111;
+}
+
+.thunar .view {
+    background-color: #000000;
+    color: #e0e0e0;
+}
+
+.thunar .view:selected {
+    background-color: #555555;
+    color: #ffffff;
+}
+
+.thunar entry {
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+    border: 1px solid #333333;
+}
+
+.thunar scrolledwindow {
+    background-color: #000000;
+}

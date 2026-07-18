@@ -1,9 +1,9 @@
 {
     "layer": "top",
-    "position": "bottom",
+    "position": "top",
     "height": 30,
     "spacing": 4,
-    "modules-left": ["hyprland/workspaces"],
+    "modules-left": ["hyprland/workspaces", "custom/cmus"],
     "modules-center": ["clock"],
     "modules-right": ["network", "custom/bluetooth", "pulseaudio", "battery", "tray", "custom/power"],
 
@@ -13,8 +13,21 @@
         "persistent-workspaces": {
             "*": [1, 2, 3, 4, 5]
         },
-        "format": "{id}",
-        "on-click": "activate"
+        "format": "{icon}",
+        "on-click": "activate",
+        "format-icons": {
+            "active": "●"
+        }
+    },
+
+    "custom/cmus": {
+        "format": "{}",
+        "exec": "~/.config/hypr/scripts/cmus-nowplaying.sh",
+        "on-click": "mpc toggle",
+        "on-click-right": "kitty -e rmpc",
+        "interval": 2,
+        "return-type": "json",
+        "tooltip": false
     },
 
     "clock": {

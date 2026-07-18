@@ -1,28 +1,29 @@
 # Hyprland Config
 
-A minimal Hyprland rice with Nord, Catppuccin Mocha & Gruvbox Dark themes.
+A minimal Hyprland rice with Nord, Catppuccin Mocha, Gruvbox Dark & Monochrome themes.
 
 ## Themes
 
-| Nord | Catppuccin Mocha | Gruvbox Dark |
-|---|---|---|
-| ![Nord](screenshots/nord.png) | ![Catppuccin Mocha](screenshots/catpuccin-mocha.png) | ![Gruvbox](screenshots/gruvbox.png) |
-| ![Nord terminal](screenshots/nord-terminal.png) | ![Catppuccin terminal](screenshots/catpuccin-mocha-terminal.png) | ![Gruvbox terminal](screenshots/gruvbox-terminal.png) |
+| Nord | Catppuccin Mocha | Gruvbox Dark | Monochrome |
+|---|---|---|---|
+| ![Nord](screenshots/nord.png) | ![Catppuccin Mocha](screenshots/catpuccin-mocha.png) | ![Gruvbox](screenshots/gruvbox.png) | ![Monochrome](screenshots/monochrome.png) |
+| ![Nord terminal](screenshots/nord-terminal.png) | ![Catppuccin terminal](screenshots/catpuccin-mocha-terminal.png) | ![Gruvbox terminal](screenshots/gruvbox-terminal.png) | ![Monochrome terminal](screenshots/monochrome-terminal.png) |
 
 ## Features
 
 - **Hyprland** — Lua config (0.55+), Omarchy-inspired keybinds
-- **Waybar** — workspace dots, clock (12h), network, battery, volume, bluetooth, tray toggle, mpd now-playing, power menu
-- **Rofi** — app launcher + powermenu (text-only)
+- **Waybar** — workspace dots/numbers, clock (12h), network, battery, volume, bluetooth, tray, mpd now-playing, power menu
+- **Rofi** — 2-column launcher + powermenu
 - **Kitty** — terminal with theme-matching ANSI colors
 - **Dunst** — notification daemon
 - **mpd + rmpc** — music player with album art notifications
 - **swaybg** — wallpaper (switches with theme)
 - **Flameshot** — `Super+Shift+S` region screenshot → clipboard
 - **Night light** — `Super+N` toggles hyprsunset (4500K)
-- **Theme switcher** — `Super+Shift+T` toggles Nord ↔ Catppuccin Mocha ↔ Gruvbox (colors, wallpapers, GTK theme, Brave theme)
+- **Theme switcher** — `Super+Shift+T` cycles Nord ↔ Catppuccin Mocha ↔ Gruvbox Dark ↔ Monochrome (colors, wallpapers, GTK theme, Brave theme, Waybar style)
 - **Bluetooth** — rofi-based scan/pair/connect/disconnect
 - **System tray** — toggle arrow in Waybar
+- **WhiteSur-cursors** — white macOS-style cursor for dark backgrounds
 
 ## Keybinds
 
@@ -65,7 +66,7 @@ Reboot or restart Hyprland after install.
 
 ## Cursor
 
-Dot-Light — set via env, GTK settings, xsettingsd, and gsettings.
+WhiteSur-cursors — set via env, GTK settings, xsettingsd, and gsettings.
 
 ## Monitor Layout
 

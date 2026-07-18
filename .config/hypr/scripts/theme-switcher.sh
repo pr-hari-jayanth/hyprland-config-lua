@@ -112,9 +112,9 @@ apply_boxxy() {
     sed -i 's/border-radius: *[0-9]*px/border-radius: 0px/g' "${C}/rofi/themes/nordic.rasi"
     sed -i "s/font:.*/font: \"${font_rasi}\";/" "${C}/rofi/themes/nordic.rasi"
 
-    # Waybar
-    sed -i 's/border-radius: *[0-9]*px/border-radius: 0px/g' "${C}/waybar/style.css"
-    sed -i "s/font-family:.*/font-family: '${font_css}';/" "${C}/waybar/style.css"
+    # Waybar - swap to black monochrome style (bottom position, numbers, no mpd)
+    cp "${C}/waybar/style-black.css" "${C}/waybar/style.css"
+    cp "${C}/waybar/config-black.jsonc" "${C}/waybar/config.jsonc"
 
     # Dunst
     sed -i 's/corner_radius = [0-9]*/corner_radius = 0/' "${C}/dunst/dunstrc"
@@ -139,20 +139,11 @@ remove_boxxy() {
 
     # Rofi - restore rounded corners and font
     sed -i 's/border-radius: 0px/border-radius: 14px/g' "${C}/rofi/themes/nordic.rasi"
-    sed -i 's/border-radius: 14px/    border-radius: 14px;/g' "${C}/rofi/themes/nordic.rasi"
-    # More targeted: window, mainbox, inputbar, listview, message
-    sed -i "/^window {/,/^}/ s/border-radius: 14px/border-radius: 14px/" "${C}/rofi/themes/nordic.rasi"
-    sed -i "/^mainbox {/,/^}/ s/border-radius: 12px/border-radius: 12px/" "${C}/rofi/themes/nordic.rasi"
-    sed -i "/^inputbar {/,/^}/ s/border-radius: 12px 12px 0 0/border-radius: 12px 12px 0 0/" "${C}/rofi/themes/nordic.rasi"
-    sed -i "/^listview {/,/^}/ s/border-radius: 0 0 12px 12px/border-radius: 0 0 12px 12px/" "${C}/rofi/themes/nordic.rasi"
-    sed -i "/^element {/,/^}/ s/border-radius: 10px/border-radius: 10px/" "${C}/rofi/themes/nordic.rasi"
-    sed -i "/^message {/,/^}/ s/border-radius: 0 0 12px 12px/border-radius: 0 0 12px 12px/" "${C}/rofi/themes/nordic.rasi"
     sed -i "s/font:.*/font: \"${def_font_rasi}\";/" "${C}/rofi/themes/nordic.rasi"
 
-    # Waybar
-    sed -i '/window/,/^}/ s/border-radius: 0px/border-radius: 10px/g' "${C}/waybar/style.css"
-    sed -i '/tooltip/,/^}/ s/border-radius: 0px/border-radius: 8px/g' "${C}/waybar/style.css"
-    sed -i "s/font-family:.*/font-family: '${def_font_css}';/" "${C}/waybar/style.css"
+    # Waybar - restore normal theme style (top position, dots, mpd, colors swapped by caller)
+    cp "${C}/waybar/.style-nord-template.css" "${C}/waybar/style.css"
+    cp "${C}/waybar/.config-nord-template.jsonc" "${C}/waybar/config.jsonc"
 
     # Dunst
     sed -i 's/corner_radius = 0/corner_radius = 8/' "${C}/dunst/dunstrc"
@@ -242,7 +233,7 @@ fi
 WALL_DIR_NORD="$HOME/Pictures/wallpapers"
 WALL_DIR_CTP="$HOME/Pictures/wallpapers-catppuccin"
 WALL_DIR_GRUV="$HOME/Pictures/wallpapers-gruvbox"
-WALL_DIR_BLACK="$HOME/Pictures/wallpapers-nord"
+WALL_DIR_BLACK="$HOME/Pictures/wallpapers-black"
 
 case "$THEME" in
     catppuccin) WDIR="$WALL_DIR_CTP" ;;
@@ -263,7 +254,7 @@ fi
 case "$THEME" in
     catppuccin) GTK_THEME="Catppuccin-Mocha" ;;
     gruvbox)    GTK_THEME="Gruvbox" ;;
-    black)      GTK_THEME="Nordic" ;;
+    black)      GTK_THEME="Blackout" ;;
     *)          GTK_THEME="Nordic" ;;
 esac
 
@@ -276,7 +267,9 @@ gsettings set org.gnome.desktop.interface gtk-theme "$GTK_THEME" 2>/dev/null || 
 
 # ── Brave theme ────────────────────────────────────────────
 
-"${C}/hypr/scripts/brave-theme.sh" "$THEME" 2>/dev/null || true
+BRAVE_FONT="JetBrainsMono Nerd Font"
+[[ "$THEME" == "black" ]] && BRAVE_FONT="Iosevka Nerd Font"
+"${C}/hypr/scripts/brave-theme.sh" "$BRAVE_FONT" 2>/dev/null || true
 
 # ── Reload everything ──────────────────────────────────────
 

@@ -1,0 +1,200 @@
+@define-color theme_fg_color #e0e0e0;
+@define-color theme_text_color #e0e0e0;
+@define-color theme_bg_color #000000;
+@define-color theme_base_color #555555;
+@define-color theme_selected_bg_color #666666;
+@define-color theme_selected_fg_color #ffffff;
+@define-color insensitive_bg_color #000000;
+@define-color insensitive_fg_color #444444;
+@define-color borders #444444;
+@define-color unfocused_borders #222222;
+@define-color warning_color #888888;
+@define-color error_color #888888;
+@define-color success_color #aaaaaa;
+
+.background {
+    background-color: #000000;
+    color: @theme_fg_color;
+}
+
+GtkWindow {
+    background-color: #000000;
+    color: @theme_fg_color;
+}
+
+GtkWindow.toplevel {
+    background-color: #000000;
+}
+
+.background.client-decorated {
+    background-color: #000000;
+}
+
+entry {
+    background-color: #1a1a1a;
+    color: @theme_text_color;
+    border-color: @borders;
+}
+
+button {
+    background-color: #1a1a1a;
+    color: @theme_fg_color;
+    border-color: @borders;
+}
+
+button:hover {
+    background-color: #333333;
+}
+
+button:active {
+    background-color: @theme_selected_bg_color;
+    color: @theme_selected_fg_color;
+}
+
+label {
+    color: @theme_fg_color;
+}
+
+scrollbar {
+    background-color: #000000;
+}
+
+scrollbar slider {
+    background-color: #444444;
+}
+
+scrollbar slider:hover {
+    background-color: #666666;
+}
+
+menu {
+    background-color: #1a1a1a;
+    color: @theme_fg_color;
+}
+
+menuitem {
+    background-color: transparent;
+    color: @theme_fg_color;
+}
+
+menuitem:hover {
+    background-color: @theme_selected_bg_color;
+    color: @theme_selected_fg_color;
+}
+
+tooltip {
+    background-color: #1a1a1a;
+    color: @theme_fg_color;
+    border-color: @borders;
+}
+
+notebook {
+    background-color: #000000;
+    color: @theme_fg_color;
+}
+
+notebook tab {
+    background-color: #000000;
+    color: #888888;
+    border: 1px solid @borders;
+    border-bottom: none;
+}
+
+notebook tab:selected {
+    background-color: #555555;
+    color: #ffffff;
+    border-bottom: 2px solid #aaaaaa;
+}
+
+checkbutton, radiobutton {
+    color: @theme_fg_color;
+}
+
+combobox {
+    background-color: #1a1a1a;
+    color: @theme_fg_color;
+}
+
+paned {
+    background-color: #000000;
+}
+
+scrolledwindow {
+    background-color: #000000;
+}
+
+viewport {
+    background-color: #000000;
+}
+
+frame {
+    border-color: @borders;
+}
+
+separator {
+    color: @borders;
+    background-color: @borders;
+}
+
+statusbar {
+    background-color: #000000;
+    color: @theme_fg_color;
+}
+
+toolbar {
+    background-color: #000000;
+    color: @theme_fg_color;
+    border-color: @borders;
+}
+
+infobar {
+    background-color: #1a1a1a;
+}
+
+headerbar {
+    background-color: #000000;
+    color: @theme_fg_color;
+    border-bottom: 2px solid #555555;
+}
+
+headerbar:backdrop {
+    border-bottom-color: @borders;
+}
+
+dialog {
+    background-color: #000000;
+}
+
+GtkHeaderBar {
+    background-color: #000000;
+    color: @theme_fg_color;
+}
+
+/* Chromium-specific tab selectors */
+notebook header.top {
+    background-color: #000000;
+}
+
+notebook header.top tab {
+    background-color: #000000;
+    color: #888888;
+}
+
+notebook header.top tab:selected {
+    background-color: #555555;
+    color: #ffffff;
+}
+
+/* GTK3 tab styling that Chromium might use */
+notebook tab GtkLabel {
+    color: #888888;
+}
+
+notebook tab:selected GtkLabel {
+    color: #ffffff;
+}
+
+notebook tab:checked {
+    background-color: #555555;
+    color: #ffffff;
+}

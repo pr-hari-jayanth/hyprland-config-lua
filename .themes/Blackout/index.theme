@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=X-GNOME-Metatheme
+Name=Blackout
+Comment=Pure Black GTK3/GTK4 theme
+Encoding=UTF-8
+
+[X-GNOME-Metatheme]
+GtkTheme=Blackout
+MetacityTheme=Blackout
+IconTheme=breeze-dark
+CursorTheme=Dot-Light
+ButtonLayout=icon:minimize,maximize,close

@@ -1,14 +1,14 @@
 * {
-    bg: #1d2021;
-    surface: #282828;
-    fg: #ebdbb2;
-    blue: #458588;
-    cyan: #8ec07c;
-    red: #cc241d;
-    yellow: #d79921;
-    muted: #504945;
+    bg: #000000;
+    surface: #0d0d0d;
+    fg: #e0e0e0;
+    blue: #2979ff;
+    cyan: #00b8d4;
+    red: #ff1744;
+    yellow: #ffea00;
+    muted: #2a2a2a;
 
-    font: "JetBrainsMono Nerd Font 12";
+    font: "Iosevka Nerd Font 12";
     background-color: var(bg);
     text-color: var(fg);
 }
@@ -16,14 +16,14 @@
 window {
     background-color: transparent;
     padding: 4px;
-    border-radius: 14px;
+    border-radius: 0px;
     width: 680px;
 }
 
 mainbox {
     background-color: var(bg);
     padding: 0;
-    border-radius: 12px;
+    border-radius: 0px;
     children: [inputbar, listview];
 }
 
@@ -31,7 +31,7 @@ inputbar {
     background-color: var(surface);
     text-color: var(fg);
     padding: 10px 4px;
-    border-radius: 12px 12px 0 0;
+    border-radius: 0px;
     spacing: 8px;
     children: [textbox-search, entry];
 }
@@ -58,7 +58,7 @@ listview {
     columns: 2;
     spacing: 6px;
     padding: 6px 6px 8px 6px;
-    border-radius: 0 0 12px 12px;
+    border-radius: 0px;
     layout: vertical;
     cycle: true;
     lines: 6;
@@ -70,7 +70,7 @@ element {
     background-color: transparent;
     text-color: var(fg);
     padding: 6px 8px;
-    border-radius: 10px;
+    border-radius: 0px;
     orientation: horizontal;
 }
 
@@ -107,7 +107,7 @@ button selected {
 message {
     background-color: var(surface);
     padding: 6px 14px;
-    border-radius: 0 0 12px 12px;
+    border-radius: 0px;
 }
 
 textbox {

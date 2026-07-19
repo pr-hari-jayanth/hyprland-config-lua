@@ -167,7 +167,7 @@ THEMES="nord\ncatppuccin\ngruvbox\nblack"
 if [[ "$1" == "menu" ]]; then
     CURRENT=$(cat "$CACHE_FILE" 2>/dev/null || echo "nord")
     THEME=$(printf "$THEMES" | rofi -dmenu -p "Theme" -mesg "Current: ${CURRENT}" -select "$CURRENT" \
-        -theme-str 'window {width: 300px;} inputbar {children: [textbox-search, entry]; spacing: 4px; padding: 8px 4px;} listview {lines: 4; spacing: 2px; padding: 4px 4px 0;} element {padding: 0;} element-text {padding: 10px 16px; horizontal-align: 0.5;} element-icon {size: 0px;} message {padding: 4px 14px 6px;} textbox {horizontal-align: 0.5;} entry {horizontal-align: 0.5;} textbox-search {horizontal-align: 0.5;}')
+        -theme-str 'window {width: 300px; location: center; anchor: center;} inputbar {children: [textbox-search, entry]; spacing: 4px; padding: 8px 4px;} listview {lines: 4; spacing: 2px; padding: 4px 4px 0;} element {padding: 0;} element-text {padding: 10px 16px; horizontal-align: 0.5;} element-icon {size: 0px;} message {padding: 4px 14px 6px;} textbox {horizontal-align: 0.5;} entry {horizontal-align: 0.5;} textbox-search {horizontal-align: 0.5;}')
     [[ -z "$THEME" ]] && exit 0
 elif [[ "$1" == "nord" || "$1" == "catppuccin" || "$1" == "gruvbox" || "$1" == "black" ]]; then
     THEME="$1"

@@ -26,6 +26,7 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("bash -c 'kill $(pgrep hyprsunset) 2>/dev/null; hyprsunset --identity'")
     hl.exec_cmd("dunst")
     hl.exec_cmd("nm-applet --indicator")
+    hl.exec_cmd("xsettingsd")
     hl.exec_cmd("bash -c 'DIR_CACHE=$HOME/.cache/current-wallpaper-dir; WDIR=$(cat \"$DIR_CACHE\" 2>/dev/null || echo \"$HOME/Pictures/wallpapers\"); CACHE=$HOME/.cache/current-wallpaper; W=$(cat \"$CACHE\" 2>/dev/null); [[ -f \"$W\" ]] || W=$(find \"$WDIR\" -type f \\( -name \\*.png -o -name \\*.jpg -o -name \\*.jpeg -o -name \\*.gif \\) | sort | head -1); killall swaybg 2>/dev/null; swaybg -i \"$W\" -m fill &'")
 end)
 
@@ -34,8 +35,8 @@ hl.env("XCURSOR_THEME", "Adwaita")
 hl.env("XCURSOR_SIZE", "24")
 
 -- Monitors
-hl.monitor({ output = "eDP-1",    mode = "preferred", position = "auto", scale = 1.25 })
-hl.monitor({ output = "HDMI-A-1", mode = "preferred", position = "auto", scale = 1 })
+hl.monitor({ output = "eDP-1",    mode = "1920x1080@60", position = "auto", scale = 1.25 })
+hl.monitor({ output = "HDMI-A-1", mode = "1920x1080@74.97", position = "auto", scale = 1 })
 
 -- Bind workspaces to monitors
 hl.workspace_rule({ workspace = "1", monitor = "HDMI-A-1" })
@@ -60,7 +61,7 @@ hl.config({
         no_focus_fallback = true,
     },
     decoration = {
-        rounding         = 2,
+        rounding = 2,
         active_opacity   = 1.0,
         inactive_opacity = 1.0,
         shadow = {

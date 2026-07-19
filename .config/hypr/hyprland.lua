@@ -33,6 +33,7 @@ end)
 -- Environment
 hl.env("XCURSOR_THEME", "Adwaita")
 hl.env("XCURSOR_SIZE", "24")
+hl.env("AQ_NO_MODIFIERS", "1")
 
 -- Monitors
 hl.monitor({ output = "eDP-1",    mode = "1920x1080@60", position = "auto", scale = 1.25 })

@@ -10,7 +10,7 @@ local browser  = "firefox"
 local fm       = "thunar"
 local editor   = "kitty -e nvim"
 local lock     = "loginctl lock-session"
-local power    = "rofi -modi 'Powermenu:~/.config/rofi/powermenu.sh' -show Powermenu"
+local power    = "~/.config/rofi/powermenu.sh"
 local night    = "~/.config/hypr/scripts/toggle-nightlight.sh"
 local wallsw   = "~/.config/hypr/scripts/wallpaper-switcher.sh"
 local screen   = "grim -g \"$(slurp)\" - | wl-copy && notify-send 'Screenshot' 'Copied to clipboard'"
@@ -61,7 +61,7 @@ hl.config({
         no_focus_fallback = true,
     },
     decoration = {
-        rounding = 2,
+        rounding = 0,
         active_opacity   = 1.0,
         inactive_opacity = 1.0,
         shadow = {

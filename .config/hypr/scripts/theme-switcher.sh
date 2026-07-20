@@ -141,10 +141,6 @@ remove_boxxy() {
     sed -i 's/border-radius: 0px/border-radius: 14px/g' "${C}/rofi/themes/nordic.rasi"
     sed -i "s/font:.*/font: \"${def_font_rasi}\";/" "${C}/rofi/themes/nordic.rasi"
 
-    # Waybar - restore normal theme style (top position, dots, mpd, colors swapped by caller)
-    cp "${C}/waybar/.style-nord-template.css" "${C}/waybar/style.css"
-    cp "${C}/waybar/.config-nord-template.jsonc" "${C}/waybar/config.jsonc"
-
     # Dunst
     sed -i 's/corner_radius = 0/corner_radius = 8/' "${C}/dunst/dunstrc"
     sed -i "s/font =.*/font = ${def_font_css} 10/" "${C}/dunst/dunstrc"
@@ -195,9 +191,9 @@ if [[ "$PREV" != "$THEME" ]]; then
         remove_boxxy
     fi
 
-    # Restore to nord first, then apply new theme
+    # Restore to nord first for non-waybar files
     if [[ "$PREV" != "nord" ]]; then
-        for dir in "waybar/style.css" "rofi/themes/nordic.rasi" "kitty/kitty.conf" "dunst/dunstrc"; do
+        for dir in "rofi/themes/nordic.rasi" "kitty/kitty.conf" "dunst/dunstrc"; do
             apply_theme "${C}/${dir}" "$PREV" "nord"
         done
         apply_foot_theme "${C}/foot/foot.ini" "$PREV" "nord"
@@ -215,7 +211,13 @@ if [[ "$PREV" != "$THEME" ]]; then
         cp "${C}/hypr/${THEME}.lua" "${C}/hypr/nordic.lua"
     fi
 
-    # Apply new theme colors
+    # Always restore waybar from clean templates for non-black themes
+    if [[ "$THEME" != "black" ]]; then
+        cp "${C}/waybar/.style-nord-template.css" "${C}/waybar/style.css"
+        cp "${C}/waybar/.config-nord-template.jsonc" "${C}/waybar/config.jsonc"
+    fi
+
+    # Apply new theme colors (sed on top of clean templates)
     if [[ "$THEME" != "nord" ]]; then
         for dir in "waybar/style.css" "rofi/themes/nordic.rasi" "kitty/kitty.conf" "dunst/dunstrc"; do
             apply_theme "${C}/${dir}" "nord" "$THEME"
@@ -223,7 +225,7 @@ if [[ "$PREV" != "$THEME" ]]; then
         apply_foot_theme "${C}/foot/foot.ini" "nord" "$THEME"
     fi
 
-    # Apply boxxy if switching to black
+    # Apply boxxy if switching to black (overwrites templates with black files)
     if [[ "$THEME" == "black" ]]; then
         apply_boxxy
     fi

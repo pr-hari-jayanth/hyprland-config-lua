@@ -26,7 +26,7 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("bash -c 'kill $(pgrep hyprsunset) 2>/dev/null; hyprsunset --identity'")
     hl.exec_cmd("dunst")
     hl.exec_cmd("nm-applet --indicator")
-    hl.exec_cmd("xsettingsd")
+    hl.exec_cmd("bash -c '~/.local/bin/xsettingsd'")
     hl.exec_cmd("bash -c 'DIR_CACHE=$HOME/.cache/current-wallpaper-dir; WDIR=$(cat \"$DIR_CACHE\" 2>/dev/null || echo \"$HOME/Pictures/wallpapers\"); CACHE=$HOME/.cache/current-wallpaper; W=$(cat \"$CACHE\" 2>/dev/null); [[ -f \"$W\" ]] || W=$(find \"$WDIR\" -type f \\( -name \\*.png -o -name \\*.jpg -o -name \\*.jpeg -o -name \\*.gif \\) | sort | head -1); killall swaybg 2>/dev/null; swaybg -i \"$W\" -m fill &'")
 end)
 
@@ -62,7 +62,7 @@ hl.config({
         no_focus_fallback = true,
     },
     decoration = {
-        rounding = 0,
+        rounding = 2,
         active_opacity   = 1.0,
         inactive_opacity = 1.0,
         shadow = {

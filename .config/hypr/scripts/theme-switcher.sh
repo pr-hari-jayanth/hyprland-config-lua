@@ -34,50 +34,10 @@ declare -A BLACK=(
     [red]="#ff1744" [orange]="#ff9100" [yellow]="#ffea00" [green]="#00e676" [purple]="#d500f9"
 )
 
-# Foot colors (no # prefix)
-declare -A FOOT_NORD=(
-    [bg]="2e3440" [surface]="3b4252" [surface2]="434c5e" [muted]="4c566a"
-    [fg]="d8dee9" [fg2]="e5e9f0" [fg3]="eceff4"
-    [teal]="8fbcbb" [cyan]="88c0d0" [blue]="81a1c1" [dark_blue]="5e81ac"
-    [red]="bf616a" [orange]="d08770" [yellow]="ebcb8b" [green]="a3be8c" [purple]="b48ead"
-)
-
-declare -A FOOT_CTP=(
-    [bg]="1e1e2e" [surface]="313244" [surface2]="45475a" [muted]="585b70"
-    [fg]="cdd6f4" [fg2]="bac2de" [fg3]="a6adc8"
-    [teal]="94e2d5" [cyan]="89dceb" [blue]="89b4fa" [dark_blue]="74c7ec"
-    [red]="f38ba8" [orange]="fab387" [yellow]="f9e2af" [green]="a6e3a1" [purple]="cba6f7"
-)
-
-declare -A FOOT_GRUV=(
-    [bg]="1d2021" [surface]="282828" [surface2]="32302f" [muted]="504945"
-    [fg]="ebdbb2" [fg2]="d5c4a1" [fg3]="fbf1c7"
-    [teal]="689d6a" [cyan]="8ec07c" [blue]="458588" [dark_blue]="83a598"
-    [red]="cc241d" [orange]="d65d0e" [yellow]="d79921" [green]="98971a" [purple]="b16286"
-)
-
-declare -A FOOT_BLACK=(
-    [bg]="000000" [surface]="0d0d0d" [surface2]="1a1a1a" [muted]="2a2a2a"
-    [fg]="e0e0e0" [fg2]="b0b0b0" [fg3]="ffffff"
-    [teal]="00e5ff" [cyan]="00b8d4" [blue]="2979ff" [dark_blue]="1565c0"
-    [red]="ff1744" [orange]="ff9100" [yellow]="ffea00" [green]="00e676" [purple]="d500f9"
-)
-
-# Build mapping: each theme has a nord->theme mapping
-build_map() {
-    local -n t="$1"
-    for key in "${!NORD[@]}"; do
-        echo "${NORD[$key]}:${t[$key]}"
-    done
-}
-
 get_palette() {
     case "$1" in nord) echo "NORD" ;; catppuccin) echo "CTP" ;; gruvbox) echo "GRUV" ;; black) echo "BLACK" ;; esac
 }
 
-get_foot_palette() {
-    case "$1" in nord) echo "FOOT_NORD" ;; catppuccin) echo "FOOT_CTP" ;; gruvbox) echo "FOOT_GRUV" ;; black) echo "FOOT_BLACK" ;; esac
-}
 
 apply_theme() {
     local file="$1" from="$2" to="$3"
@@ -90,16 +50,6 @@ apply_theme() {
     done
 }
 
-apply_foot_theme() {
-    local file="$1" from="$2" to="$3"
-    [[ ! -f "$file" ]] && return
-    local from_arr=$(get_foot_palette "$from")
-    local to_arr=$(get_foot_palette "$to")
-    local -n f="$from_arr" t="$to_arr"
-    for key in "${!f[@]}"; do
-        sed -i "s/${f[$key]}/${t[$key]}/gi" "$file"
-    done
-}
 
 # ── Boxxy (black theme) style overrides ─────────────────────
 
@@ -196,7 +146,6 @@ if [[ "$PREV" != "$THEME" ]]; then
         for dir in "rofi/themes/nordic.rasi" "kitty/kitty.conf" "dunst/dunstrc"; do
             apply_theme "${C}/${dir}" "$PREV" "nord"
         done
-        apply_foot_theme "${C}/foot/foot.ini" "$PREV" "nord"
     fi
 
     # Backup nordic.lua before overwriting
@@ -222,7 +171,6 @@ if [[ "$PREV" != "$THEME" ]]; then
         for dir in "waybar/style.css" "rofi/themes/nordic.rasi" "kitty/kitty.conf" "dunst/dunstrc"; do
             apply_theme "${C}/${dir}" "nord" "$THEME"
         done
-        apply_foot_theme "${C}/foot/foot.ini" "nord" "$THEME"
     fi
 
     # Apply boxxy if switching to black (overwrites templates with black files)

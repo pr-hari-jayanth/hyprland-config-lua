@@ -1,6 +1,4 @@
 #!/bin/bash
-set -e
-
 DOTFILES="$(cd "$(dirname "$0")" && pwd)"
 
 echo "=== Hyprland dotfiles installer ==="
@@ -58,22 +56,27 @@ fi
 # Gruvbox GTK theme (Fausto-Korpsvart's Gruvbox-GTK-Theme)
 if [[ ! -d "$HOME/.themes/Gruvbox" ]]; then
     echo "Downloading and building Gruvbox GTK theme..."
-    git clone --depth=1 https://github.com/Fausto-Korpsvart/Gruvbox-GTK-Theme.git /tmp/gruvbox-gtk
-    # Build sassc from source (needed for compilation)
-    git clone --depth=1 https://github.com/sass/libsass.git /tmp/libsass
-    git clone --depth=1 https://github.com/sass/sassc.git /tmp/sassc
-    make -C /tmp/libsass -j$(nproc)
-    make -C /tmp/sassc SASS_LIBSASS_PATH=/tmp/libsass -j$(nproc)
-    cp /tmp/sassc/bin/sassc ~/.local/bin/
-    # Build and install theme
-    export PATH="$HOME/.local/bin:$PATH"
-    cd /tmp/gruvbox-gtk/themes
-    ./build.sh
-    ./install.sh -c dark -n Gruvbox --dest "$HOME/.themes"
-    mv "$HOME/.themes/Gruvbox-Dark" "$HOME/.themes/Gruvbox" 2>/dev/null || true
-    mv "$HOME/.themes/Gruvbox-Dark-hdpi" "$HOME/.themes/Gruvbox-hdpi" 2>/dev/null || true
-    mv "$HOME/.themes/Gruvbox-Dark-xhdpi" "$HOME/.themes/Gruvbox-xhdpi" 2>/dev/null || true
-    sed -i 's/Name=Gruvbox-Dark/Name=Gruvbox/' "$HOME/.themes/Gruvbox/index.theme" 2>/dev/null || true
+    if git clone --depth=1 https://github.com/Fausto-Korpsvart/Gruvbox-GTK-Theme.git /tmp/gruvbox-gtk 2>/dev/null; then
+        # Build sassc from source (needed for compilation)
+        if git clone --depth=1 https://github.com/sass/libsass.git /tmp/libsass 2>/dev/null && \
+           git clone --depth=1 https://github.com/sass/sassc.git /tmp/sassc 2>/dev/null && \
+           make -C /tmp/libsass -j$(nproc) 2>/dev/null && \
+           make -C /tmp/sassc SASS_LIBSASS_PATH=/tmp/libsass -j$(nproc) 2>/dev/null; then
+            mkdir -p "$HOME/.local/bin"
+            cp /tmp/sassc/bin/sassc "$HOME/.local/bin/"
+            export PATH="$HOME/.local/bin:$PATH"
+            cd /tmp/gruvbox-gtk/themes
+            ./build.sh 2>/dev/null && ./install.sh -c dark -n Gruvbox --dest "$HOME/.themes" 2>/dev/null
+            mv "$HOME/.themes/Gruvbox-Dark" "$HOME/.themes/Gruvbox" 2>/dev/null || true
+            mv "$HOME/.themes/Gruvbox-Dark-hdpi" "$HOME/.themes/Gruvbox-hdpi" 2>/dev/null || true
+            mv "$HOME/.themes/Gruvbox-Dark-xhdpi" "$HOME/.themes/Gruvbox-xhdpi" 2>/dev/null || true
+            sed -i 's/Name=Gruvbox-Dark/Name=Gruvbox/' "$HOME/.themes/Gruvbox/index.theme" 2>/dev/null || true
+        else
+            echo "Warning: Failed to build sassc, skipping Gruvbox theme build"
+        fi
+    else
+        echo "Warning: Failed to clone Gruvbox theme repo"
+    fi
 fi
 
 # Nordic wallpapers

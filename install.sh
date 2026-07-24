@@ -1,33 +1,35 @@
 #!/bin/bash
-# Hyprland dotfiles installer — handles fresh EndeavourOS/Arch systems
+# Hyprland dotfiles installer — fresh EndeavourOS/Arch systems
+# Installs packages, themes, wallpapers from pr-hari-jayanth/hyprland-config-wallpapers
 
 DOTFILES="$(cd "$(dirname "$0")" && pwd)"
+WALLPAPER_REPO="https://github.com/pr-hari-jayanth/hyprland-config-wallpapers.git"
 
 echo "=== Hyprland dotfiles installer ==="
 echo ""
 
 # ── 1. Packages ──────────────────────────────────────────────────────
 
-echo "[1/5] Installing packages..."
+echo "[1/6] Installing packages..."
 
 PKGS=(
     hyprland waybar rofi kitty dunst swaybg
     mpd rmpc hyprsunset
-    flameshot grim slurp wl-clipboard
+    grim slurp wl-clipboard
     network-manager-applet bluez-utils
     xsettingsd polkit-gnome
-    thunar ffmpeg firefox neovim
+    thunar ffmpeg neovim
     curl unzip git base-devel
     otf-font-awesome ttf-jetbrains-mono-nerd
 )
 
 sudo pacman -S --needed --noconfirm "${PKGS[@]}" || {
-    echo "Warning: some pacman packages failed, continuing..."
+    echo "Warning: some packages failed, continuing..."
 }
 
 # AUR helper
 if ! command -v paru &>/dev/null && ! command -v yay &>/dev/null; then
-    echo "Installing paru (AUR helper)..."
+    echo "Installing paru..."
     (
         cd /tmp && rm -rf paru
         git clone https://aur.archlinux.org/paru.git /tmp/paru
@@ -40,33 +42,33 @@ if [[ -n "$AUR_HELPER" ]]; then
     $AUR_HELPER -S --needed --noconfirm bibata-cursor-theme-bin 2>/dev/null || true
 fi
 
-# ── 2. Themes & Assets ──────────────────────────────────────────────
+# ── 2. Themes & GTK ─────────────────────────────────────────────────
 
-echo "[2/5] Downloading themes and wallpapers..."
+echo "[2/6] Installing GTK themes..."
 
 mkdir -p "$HOME/.themes" "$HOME/.local/bin" "$HOME/.fonts" "$HOME/Pictures"
 
-# Nordic GTK theme
+# Nordic
 if [[ ! -d "$HOME/.themes/Nordic" ]]; then
-    echo "  Nordic GTK theme..."
+    echo "  Nordic..."
     curl -fsSL "https://github.com/EliverLara/Nordic/releases/latest/download/Nordic.tar.xz" -o /tmp/nordic-gtk.tar.xz 2>/dev/null \
         && tar xf /tmp/nordic-gtk.tar.xz -C "$HOME/.themes/" 2>/dev/null \
-        || echo "  Warning: Nordic theme download failed"
+        || echo "  Warning: Nordic download failed"
 fi
 
-# Catppuccin Mocha GTK theme
+# Catppuccin Mocha
 if [[ ! -d "$HOME/.themes/Catppuccin-Mocha" ]]; then
-    echo "  Catppuccin Mocha GTK theme..."
+    echo "  Catppuccin Mocha..."
     curl -fsSL "https://github.com/catppuccin/gtk/releases/download/v1.0.3/catppuccin-mocha-blue-standard%2Bdefault.zip" -o /tmp/catppuccin-gtk.zip 2>/dev/null \
         && unzip -o /tmp/catppuccin-gtk.zip -d "$HOME/.themes/" 2>/dev/null \
         && mv "$HOME/.themes/catppuccin-mocha-blue-standard+default" "$HOME/.themes/Catppuccin-Mocha" 2>/dev/null \
         && sed -i 's/Name=.*/Name=Catppuccin-Mocha/' "$HOME/.themes/Catppuccin-Mocha/index.theme" 2>/dev/null \
-        || echo "  Warning: Catppuccin theme download failed"
+        || echo "  Warning: Catppuccin download failed"
 fi
 
-# Gruvbox GTK theme
+# Gruvbox
 if [[ ! -d "$HOME/.themes/Gruvbox" ]]; then
-    echo "  Gruvbox GTK theme..."
+    echo "  Gruvbox..."
     if git clone --depth=1 https://github.com/Fausto-Korpsvart/Gruvbox-GTK-Theme.git /tmp/gruvbox-gtk 2>/dev/null; then
         if git clone --depth=1 https://github.com/sass/libsass.git /tmp/libsass 2>/dev/null \
            && git clone --depth=1 https://github.com/sass/sassc.git /tmp/sassc 2>/dev/null \
@@ -83,47 +85,22 @@ if [[ ! -d "$HOME/.themes/Gruvbox" ]]; then
             mv "$HOME/.themes/Gruvbox-Dark-xhdpi" "$HOME/.themes/Gruvbox-xhdpi" 2>/dev/null || true
             [[ -f "$HOME/.themes/Gruvbox/index.theme" ]] && sed -i 's/Name=Gruvbox-Dark/Name=Gruvbox/' "$HOME/.themes/Gruvbox/index.theme" 2>/dev/null || true
         else
-            echo "  Warning: Failed to build sassc, skipping Gruvbox theme"
+            echo "  Warning: Gruvbox build failed"
         fi
     else
-        echo "  Warning: Failed to clone Gruvbox theme repo"
+        echo "  Warning: Gruvbox clone failed"
     fi
 fi
 
-# Blackout GTK theme (from dotfiles)
+# Blackout (from dotfiles)
 if [[ ! -d "$HOME/.themes/Blackout" && -d "$DOTFILES/.themes/Blackout" ]]; then
-    echo "  Blackout GTK theme..."
+    echo "  Blackout..."
     cp -r "$DOTFILES/.themes/Blackout" "$HOME/.themes/"
 fi
 
-# ── Wallpapers ──────────────────────────────────────────────────────
+# ── 3. Fonts ────────────────────────────────────────────────────────
 
-echo "  Wallpapers..."
-
-if [[ ! -d "$HOME/Pictures/wallpapers" ]]; then
-    git clone --depth=1 https://github.com/linuxdotexe/nordic-wallpapers.git /tmp/nordic-walls 2>/dev/null \
-        && mkdir -p "$HOME/Pictures/wallpapers" \
-        && cp /tmp/nordic-walls/wallpapers/* "$HOME/Pictures/wallpapers/" 2>/dev/null \
-        || echo "  Warning: Nordic wallpapers failed"
-fi
-
-if [[ ! -d "$HOME/Pictures/wallpapers-catppuccin" ]]; then
-    git clone --depth=1 https://github.com/orangci/walls-catppuccin-mocha.git "$HOME/Pictures/wallpapers-catppuccin" 2>/dev/null \
-        || echo "  Warning: Catppuccin wallpapers failed"
-fi
-
-if [[ ! -d "$HOME/Pictures/wallpapers-gruvbox" ]]; then
-    git clone --depth=1 https://github.com/AngelJumbo/gruvbox-wallpapers.git /tmp/gruvbox-walls 2>/dev/null \
-        && mkdir -p "$HOME/Pictures/wallpapers-gruvbox" \
-        && cp -r /tmp/gruvbox-walls/wallpapers/* "$HOME/Pictures/wallpapers-gruvbox/" 2>/dev/null \
-        || echo "  Warning: Gruvbox wallpapers failed"
-fi
-
-mkdir -p "$HOME/Pictures/wallpapers-black"
-
-# ── Fonts ───────────────────────────────────────────────────────────
-
-echo "  Fonts..."
+echo "[3/6] Installing fonts..."
 
 if [[ ! -d "$HOME/.fonts/Iosevka Nerd Font" ]]; then
     curl -fsSL "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/Iosevka.zip" -o /tmp/iosevka.zip 2>/dev/null \
@@ -132,18 +109,56 @@ if [[ ! -d "$HOME/.fonts/Iosevka Nerd Font" ]]; then
         || echo "  Warning: Iosevka font install failed"
 fi
 
-# ── 3. Config files ─────────────────────────────────────────────────
+# ── 4. Wallpapers (from pr-hari-jayanth/hyprland-config-wallpapers) ─
 
-echo "[3/5] Installing config files..."
+echo "[4/6] Downloading wallpapers..."
 
-# Backup any existing real config dirs (before we overwrite with symlinks)
+clone_wallpapers() {
+    local repo_dir="$1"
+    local dest_dir="$2"
+    local subpath="$3"
+
+    if [[ -d "$dest_dir" ]]; then
+        echo "  $dest_dir already exists, skipping"
+        return
+    fi
+
+    echo "  Downloading $(basename "$dest_dir") wallpapers..."
+    if git clone --depth=1 "${WALLPAPER_REPO}" /tmp/wallpaper-repo 2>/dev/null; then
+        mkdir -p "$dest_dir"
+        if [[ -n "$subpath" ]]; then
+            # For gruvbox: copy from subdirectories
+            cp -r /tmp/wallpaper-repo/${repo_dir}/${subpath}/* "$dest_dir/" 2>/dev/null \
+                || cp -r /tmp/wallpaper-repo/${repo_dir}/* "$dest_dir/" 2>/dev/null
+        else
+            cp -r /tmp/wallpaper-repo/${repo_dir}/* "$dest_dir/" 2>/dev/null
+        fi
+    else
+        echo "  Warning: Failed to clone wallpaper repo for $dest_dir"
+    fi
+}
+
+clone_wallpapers "nord" "$HOME/Pictures/wallpapers" ""
+clone_wallpapers "catppuccin-mocha" "$HOME/Pictures/wallpapers-catppuccin" ""
+clone_wallpapers "gruvbox" "$HOME/Pictures/wallpapers-gruvbox" "minimalistic"
+
+# Clean up wallpaper repo clone
+rm -rf /tmp/wallpaper-repo
+
+# Black wallpapers dir
+mkdir -p "$HOME/Pictures/wallpapers-black"
+
+# ── 5. Config files ─────────────────────────────────────────────────
+
+echo "[5/6] Installing config files..."
+
+# Backup any existing real config dirs
 BACKUP_DIR="$HOME/.config-backup-$(date +%Y%m%d-%H%M%S)"
 BACKED_UP=false
 
 for dir in "$DOTFILES"/.config/*/; do
     name=$(basename "$dir")
     target="$HOME/.config/$name"
-    # If it exists as a real dir (not a symlink), back it up
     if [[ -d "$target" && ! -L "$target" ]]; then
         mkdir -p "$BACKUP_DIR"
         mv "$target" "$BACKUP_DIR/"
@@ -155,7 +170,7 @@ if $BACKED_UP; then
     echo "  Old configs backed up to $BACKUP_DIR"
 fi
 
-# Create symlinks for all config dirs
+# Create symlinks
 for dir in "$DOTFILES"/.config/*/; do
     name=$(basename "$dir")
     target="$HOME/.config/$name"
@@ -165,17 +180,27 @@ done
 
 mkdir -p "$HOME/.cache"
 
-# ── 4. Services ─────────────────────────────────────────────────────
+# ── 6. Apply Nord theme (colors wallpapers everything) ──────────────
 
-echo "[4/5] Enabling services..."
+echo "[6/6] Applying Nord theme..."
+
+# Set cache so theme-switcher knows we're coming from black theme
+echo "black" > /tmp/current-theme
+
+# Run theme-switcher to apply nord (restores waybar templates, kitty, dunst, rofi, hyprland, wallpaper)
+bash "$HOME/.config/hypr/scripts/theme-switcher.sh" nord 2>/dev/null
+
+# ── Services ────────────────────────────────────────────────────────
+
+echo "Enabling services..."
 sudo systemctl enable bluetooth 2>/dev/null || true
 systemctl --user enable mpd 2>/dev/null || true
 systemctl --user start mpd 2>/dev/null || true
 
-# ── 5. Done ─────────────────────────────────────────────────────────
+# ── Done ────────────────────────────────────────────────────────────
 
-echo "[5/5] Installation complete!"
+echo ""
+echo "=== Installation complete! ==="
 echo ""
 echo "Reboot or restart Hyprland to apply."
-echo "Keybinds: Super+Shift+K to show help"
-echo "Theme switcher: Super+Shift+T"
+echo "Keybinds: Super+Shift+K  |  Theme: Super+Shift+T"

@@ -148,14 +148,9 @@ if [[ "$PREV" != "$THEME" ]]; then
         done
     fi
 
-    # Backup nordic.lua before overwriting
-    if [[ "$THEME" != "nord" ]]; then
-        cp "${C}/hypr/nordic.lua" "${C}/hypr/nordic.lua.bak" 2>/dev/null || true
-    fi
-
     # Swap hyprland color palette (nordic.lua always gets the active theme)
     if [[ "$THEME" == "nord" ]]; then
-        cp "${C}/hypr/nordic.lua.bak" "${C}/hypr/nordic.lua" 2>/dev/null || true
+        cp "${C}/hypr/nord.lua" "${C}/hypr/nordic.lua"
     else
         cp "${C}/hypr/${THEME}.lua" "${C}/hypr/nordic.lua"
     fi
